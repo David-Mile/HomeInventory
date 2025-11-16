@@ -145,41 +145,117 @@ HomeMemory follows modern software engineering principles with a clean, modular 
 HomeInventory/
 ├── README.md
 ├── LICENSE
-├── HomeInventory.pro                    # Root project file
+├── VISUAL_STUDIO_SETUP.md
+├── THIRD_PARTY_LICENSES.md
+├── .gitignore
+├── .editorconfig
+├── HomeInventory.sln                   # Visual Studio Solution
 │
-├── HomeInventoryData/                   # Data Layer Library (DLL)
-│   ├── HomeInventoryData.pro
-│   ├── DatabaseManager/
-│   │   ├── idatabasemanager.h       # Database interface
-│   │   ├── firebasedatabasemanager.h/cpp
-│   │   └── databasefactory.h/cpp
-│   ├── Models/
-│   │   ├── homeobject.h/cpp         # Core data model
-│   │   └── location.h/cpp
-│   └── Repositories/
-│       ├── objectrepository.h/cpp
-│       ├── colorrepository.h/cpp
-│       ├── materialrepository.h/cpp
-│       └── typerepository.h/cpp
+├── HomeInventoryGUI/                   # GUI Application (EXE)
+│   ├── HomeInventoryGUI.vcxproj        # VS Project file
+│   ├── HomeInventoryryGUI.vcxproj.filters
+│   ├── main.cpp
+│   │
+│   ├── MainWindow/
+│   │   ├── mainwindow.h
+│   │   └── mainwindow.cpp
+│   │
+│   ├── Widgets/
+│   │   ├── Environments/                # Home environment widgets
+│   │   │   ├── wambienti.h/cpp
+│   │   │   ├── wcasa.h/cpp
+│   │   │   ├── wcantamb.h/cpp
+│   │   │   ├── wsottoambienti.h/cpp
+│   │   │   └── wsovraposizioni.h/cpp
+│   │   │
+│   │   ├── Rooms/                       # Specific rooms widgets
+│   │   │   ├── wopenspace.h/cpp/ui
+│   │   │   ├── wanticamera.h/cpp/ui
+│   │   │   ├── wbagno.h/cpp/ui
+│   │   │   ├── wcamera.h/cpp/ui
+│   │   │   ├── wcantina.h/cpp/ui
+│   │   │   ├── wbox.h/cpp/ui
+│   │   │   ├── wbalcone.h/cpp/ui
+│   │   │   ├── wripostiglio.h/cpp/ui
+│   │   │   ├── wsalotto.h/cpp/ui
+│   │   │   ├── wcucina.h/cpp/ui
+│   │   │   ├── wscarpiera.h/cpp/ui
+│   │   │   ├── warmadiobagno.h/cpp/ui
+│   │   │   ├── warmadiettolav.h/cpp/ui
+│   │   │   ├── warmadiocassettiera.h/cpp/ui
+│   │   │   ├── wscrivaniacomodino.h/cpp/ui
+│   │   │   ├── wleftwall.h/cpp/ui
+│   │   │   └── wfrontwall.h/cpp/ui
+│   │   │
+│   │   ├── Movables/                   # Specific movables widgets
+│   │   │   ├── wopenspace.h/cpp/ui
+│   │   │   ├── wanticamera.h/cpp/ui
+│   │   │
+│   │   ├── ObjectManager/           # Object management UI
+│   │   │   ├── wobjmanager.h
+│   │   │   ├── wobjmanager.cpp
+│   │   │   └── wobjmanager.ui
+│   │   │
+│   │   ├── Search/                  # Search interface
+│   │   │   ├── wsearch.h
+│   │   │   ├── wsearch.cpp
+│   │   │   └── wsearch.ui
+│   │   │
+│   │   ├── Settings/                # Application settings
+│   │   │   ├── wsettings.h
+│   │   │   ├── wsettings.cpp
+│   │   │   └── wsettings.ui
+│   │   │
+│   │   └── Common/                  # Shared widgets
+│   │       ├── wlowbtns.h/cpp
+│   │       └── wlogo.h/cpp
+│   │
+│   ├── Config/
+│   │   ├── appconfig.h
+│   │   └── appconfig.cpp
+│   │
+│   └── Resources/
+│       ├── resources.qrc            # Qt resource file
+│       ├── img/                     # Image assets
+│       │   ├── plus.png
+│       │   ├── minus.png
+│       │   ├── arrowIconForward.png
+│       │   ├── arrowIconback.png
+│       │   └── settingsBtn-icon.jpg
+│       └── styles/                  # Qt stylesheets
+│           └── qdarkstyle/
+│               └── dark/
+│                   ├── darkstyle.qss
+│                   ├── darkstyle.qrc
+│                   └── rc/          # Style resources
 │
-└── HomeInventoryGUI/                    # GUI Application (EXE)
-    ├── HomeInventoryGUI.pro
-    ├── main.cpp
-    ├── MainWindow/
-    │   └── mainwindow.h/cpp
-    ├── Widgets/
-    │   ├── Ambienti/                # Home environment widgets
-    │   ├── Locations/               # Specific location widgets
-    │   ├── ObjectManager/           # Object management UI
-    │   ├── Search/                  # Search interface
-    │   ├── Settings/                # Application settings
-    │   └── Common/                  # Shared widgets
-    ├── Config/
-    │   └── appconfig.h/cpp          # App configuration
-    └── Resources/
-        ├── img/                     # Image assets
-        ├── styles/                  # Qt stylesheets
-        └── resources.qrc            # Qt resource file
+└── HomeInventoryData/               # Data Layer Library (DLL)
+    ├── HomeInventoryData.vcxproj       # VS Project file
+    ├── HomeInventoryData.vcxproj.filters
+    ├── homememorydata_global.h      # DLL export macros
+    │
+    ├── DatabaseManager/
+    │   ├── idatabasemanager.h       # Database interface (abstract)
+    │   ├── firebasedatabasemanager.h
+    │   ├── firebasedatabasemanager.cpp
+    │   ├── databasefactory.h
+    │   └── databasefactory.cpp
+    │
+    ├── Models/
+    │   ├── homeobject.h
+    │   ├── homeobject.cpp
+    │   ├── location.h
+    │   └── location.cpp
+    │
+    └── Repositories/
+        ├── objectrepository.h
+        ├── objectrepository.cpp
+        ├── colorrepository.h
+        ├── colorrepository.cpp
+        ├── materialrepository.h
+        ├── materialrepository.cpp
+        ├── typerepository.h
+        └── typerepository.cpp
 ```
 
 ## 🎯 Usage
