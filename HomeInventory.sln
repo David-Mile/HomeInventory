@@ -1,9 +1,14 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36623.8 d17.14
+VisualStudioVersion = 17.14.36623.8
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HomeInventoryGUI", "HomeInventoryGUI\HomeInventoryGUI.vcxproj", "{AFB31E55-F06B-48F4-9435-34E23887A587}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4E0CDFA6-6CBE-49F3-BBC3-42F898F88E3F} = {4E0CDFA6-6CBE-49F3-BBC3-42F898F88E3F}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HomeInventoryData", "HomeInventoryData\HomeInventoryData.vcxproj", "{4E0CDFA6-6CBE-49F3-BBC3-42F898F88E3F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +20,10 @@ Global
 		{AFB31E55-F06B-48F4-9435-34E23887A587}.Debug|x64.Build.0 = Debug|x64
 		{AFB31E55-F06B-48F4-9435-34E23887A587}.Release|x64.ActiveCfg = Release|x64
 		{AFB31E55-F06B-48F4-9435-34E23887A587}.Release|x64.Build.0 = Release|x64
+		{4E0CDFA6-6CBE-49F3-BBC3-42F898F88E3F}.Debug|x64.ActiveCfg = Debug|x64
+		{4E0CDFA6-6CBE-49F3-BBC3-42F898F88E3F}.Debug|x64.Build.0 = Debug|x64
+		{4E0CDFA6-6CBE-49F3-BBC3-42F898F88E3F}.Release|x64.ActiveCfg = Release|x64
+		{4E0CDFA6-6CBE-49F3-BBC3-42F898F88E3F}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

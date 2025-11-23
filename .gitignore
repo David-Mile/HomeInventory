@@ -41,7 +41,10 @@
 *.dwo
 
 HomeInventoryGUI/x64/
+HomeInventoryData/x64/
 
 .vs/
 
 *.user
+
+x64/
