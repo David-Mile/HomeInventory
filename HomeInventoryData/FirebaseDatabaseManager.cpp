@@ -22,7 +22,7 @@ FirebaseDatabaseManager::~FirebaseDatabaseManager()
 
 bool FirebaseDatabaseManager::connect(const QString& firebaseUrl)
 {
-    m_firebaseUrl = "https://homeinventory-b858b-default-rtdb.europe-west1.firebasedatabase.app/";
+    m_firebaseUrl = firebaseUrl;
 
     // Rimuovi trailing slash se presente
     if (m_firebaseUrl.endsWith('/')) {
@@ -35,14 +35,14 @@ bool FirebaseDatabaseManager::connect(const QString& firebaseUrl)
     if (!testDoc.isNull()) {
         m_isConnected = true;
         setLastError(QString());
-        std::cout << u8"✅ Connected to Firebase:";
+        std::cout << u8"✅ Connected to Firebase: ";
         qDebug() << m_firebaseUrl;
         return true;
     }
 
     m_isConnected = false;
     setLastError("Failed to connect to Firebase database");
-    std::cout << u8"❌ Failed to connect to Firebase:";
+    std::cout << u8"❌ Failed to connect to Firebase: ";
     qDebug() << m_firebaseUrl;
     return false;
 }
@@ -67,7 +67,8 @@ void FirebaseDatabaseManager::setLastError(const QString& error)
 {
     m_lastError = error;
     if (!error.isEmpty()) {
-        qDebug() << "❌ Firebase Error:" << error;
+        std::cout << u8"❌ Firebase Error: ";
+        qDebug() << error;
     }
 }
 
@@ -362,7 +363,8 @@ bool FirebaseDatabaseManager::createObject(const HomeObject& object)
     bool success = performPutRequest(path, jsonObj);
 
     if (success) {
-        qDebug() << "✅ Object created:" << object.name();
+        std::cout << u8"✅ Object created: ";
+        qDebug() << object.name();
     }
 
     return success;
@@ -393,7 +395,7 @@ QList<HomeObject> FirebaseDatabaseManager::getAllObjects()
         objects.append(obj);
     }
 
-    qDebug() << "📦 Retrieved" << objects.size() << "objects from Firebase";
+    std::cout << u8"📦 Retrieved " << objects.size() << " objects from Firebase\n";
     return objects;
 }
 
@@ -439,7 +441,8 @@ bool FirebaseDatabaseManager::deleteObject(const QString& objectName)
     bool success = performDeleteRequest(path);
 
     if (success) {
-        qDebug() << "🗑️ Object deleted:" << objectName;
+        std::cout << u8"🗑️ Object deleted: ";
+        qDebug() << objectName;
     }
 
     return success;
@@ -513,7 +516,7 @@ QStringList FirebaseDatabaseManager::getColors()
         }
     }
 
-    qDebug() << "🎨 Retrieved" << colors.size() << "colors";
+    std::cout << u8"🎨 Retrieved " << colors.size() << " colors\n";
     return colors;
 }
 
@@ -535,7 +538,7 @@ QStringList FirebaseDatabaseManager::getMaterials()
         }
     }
 
-    qDebug() << "🔨 Retrieved" << materials.size() << "materials";
+    std::cout << u8"🔨 Retrieved " << materials.size() << " materials\n";
     return materials;
 }
 
@@ -557,7 +560,7 @@ QStringList FirebaseDatabaseManager::getTypes()
         }
     }
 
-    qDebug() << "📋 Retrieved" << types.size() << "types";
+    std::cout << u8"📋 Retrieved " << types.size() << " types\n";
     return types;
 }
 

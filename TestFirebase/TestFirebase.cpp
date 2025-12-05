@@ -8,7 +8,6 @@
 #include "FirebaseDatabaseManager.h"
 #include "HomeObject.h"
 
-void testConnection(FirebaseDatabaseManager& db, const QString& url);
 void testAttributes(FirebaseDatabaseManager& db);
 void testObjects(FirebaseDatabaseManager& db);
 
@@ -31,7 +30,7 @@ int main(int argc, char* argv[])
     // Test 1: Connection
     std::cout << u8"\n📡 TEST 1: Connection\n";
     qDebug() << "Firebase URL:" << firebaseUrl;
-    testConnection(db, firebaseUrl);
+    db.connect(firebaseUrl);
 
     if (!db.isConnected()) {
         std::cout << u8"\n❌ Cannot proceed without connection. Exiting.\n";
@@ -53,53 +52,41 @@ int main(int argc, char* argv[])
     return 0;
 }
 
-void testConnection(FirebaseDatabaseManager& db, const QString& url)
-{
-    bool connected = db.connect(url);
-
-    if (connected) {
-        std::cout << u8"✅ Connected successfully!\n";
-    }
-    else {
-        std::cout << u8"❌ Connection failed!\n";
-        qDebug() << "Error:" << db.lastError();
-    }
-}
-
 void testAttributes(FirebaseDatabaseManager& db)
 {
     // Test Colors
-    qDebug() << "\n🎨 Testing Colors...";
+    std::cout << u8"\n🎨 Testing Colors...\n";
     QStringList colors = db.getColors();
     qDebug() << "Colors in database:" << colors;
 
     // Test Materials
-    qDebug() << "\n🔨 Testing Materials...";
+    std::cout << u8"\n🔨 Testing Materials...\n";
     QStringList materials = db.getMaterials();
     qDebug() << "Materials in database:" << materials;
 
     // Test Types
-    qDebug() << "\n📋 Testing Types...";
+    std::cout << u8"\n📋 Testing Types...\n";
     QStringList types = db.getTypes();
     qDebug() << "Types in database:" << types;
 
     // Test Add Color
-    qDebug() << "\n➕ Testing Add Color...";
+    std::cout << u8"\n➕ Testing Add Color...\n";
     bool added = db.addColor("Arancione");
     if (added) {
-        qDebug() << "✅ Color 'Arancione' added!";
+        std::cout << u8"✅ Color 'Arancione' added!\n";
         QStringList updatedColors = db.getColors();
         qDebug() << "Updated colors:" << updatedColors;
     }
     else {
-        qDebug() << "⚠️ Could not add color:" << db.lastError();
+        std::cout << u8"⚠️ Could not add color: ";
+        qDebug() << db.lastError();
     }
 }
 
 void testObjects(FirebaseDatabaseManager& db)
 {
     // Test Create Object
-    qDebug() << "\n➕ Testing Create Object...";
+    std::cout << "\n➕ Testing Create Object...\n";
 
     HomeObject testObj;
     testObj.setName("Libro di Test");
@@ -112,14 +99,15 @@ void testObjects(FirebaseDatabaseManager& db)
 
     bool created = db.createObject(testObj);
     if (created) {
-        qDebug() << "✅ Object created successfully!";
+        std::cout << u8"✅ Object created successfully!\n";
     }
     else {
-        qDebug() << "❌ Failed to create object:" << db.lastError();
+        std::cout << u8"❌ Failed to create object:";
+        qDebug() << db.lastError();
     }
 
     // Test Get All Objects
-    qDebug() << "\n📥 Testing Get All Objects...";
+    std::cout << u8"\n📥 Testing Get All Objects...\n";
     QList<HomeObject> allObjects = db.getAllObjects();
     qDebug() << "Total objects in database:" << allObjects.size();
 
@@ -128,20 +116,21 @@ void testObjects(FirebaseDatabaseManager& db)
     }
 
     // Test Update Object
-    qDebug() << "\n✏️ Testing Update Object...";
+    std::cout << u8"\n✏️ Testing Update Object...\n";
     testObj.setNotes("Note aggiornate!");
     testObj.setColor("Blu");
 
     bool updated = db.updateObject("Libro di Test", testObj);
     if (updated) {
-        qDebug() << "✅ Object updated successfully!";
+        std::cout << u8"✅ Object updated successfully!\n";
     }
     else {
-        qDebug() << "❌ Failed to update object:" << db.lastError();
+        std::cout << u8"❌ Failed to update object:\n";
+        qDebug() << db.lastError();
     }
 
     // Test Search Objects
-    qDebug() << "\n🔍 Testing Search Objects...";
+    std::cout << u8"\n🔍 Testing Search Objects...\n";
     QVariantMap filters;
     filters["colors"] = QStringList{ "Blu" };
 
@@ -149,18 +138,19 @@ void testObjects(FirebaseDatabaseManager& db)
     qDebug() << "Objects with color 'Blu':" << searchResults.size();
 
     // Test Delete Object
-    qDebug() << "\n🗑️ Testing Delete Object...";
+    std::cout << u8"\n🗑️ Testing Delete Object...\n";
     bool deleted = db.deleteObject("Libro di Test");
     if (deleted) {
-        qDebug() << "✅ Object deleted successfully!";
+        std::cout << u8"✅ Object deleted successfully!\n";
     }
     else {
-        qDebug() << "❌ Failed to delete object:" << db.lastError();
+        std::cout << u8"❌ Failed to delete object: ";
+        qDebug() << db.lastError();
     }
 
     // Verify deletion
     QList<HomeObject> afterDelete = db.getAllObjects();
-    qDebug() << "Objects after deletion:" << afterDelete.size();
+    qDebug() << "Objects after deletion: " << afterDelete.size();
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
