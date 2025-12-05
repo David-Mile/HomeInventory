@@ -1,0 +1,429 @@
+<FlowDocument xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" FontFamily="Segoe UI" FontSize="12">
+  <FlowDocument.Tag><![CDATA[{
+  "timestamp": "2025-11-25 14:24:05",
+  "files": {
+    "C:\\Users\\miglio\\OneDrive - TXT e-solutions S.p.A\\Documents\\GitKraken\\HomeInventory\\TestFirebase\\TestFirebase.vcxproj": {
+      "before": "7VlLb+M2EN5zgR567E0QUjg+xHJiN8k2sha7djYw6jywzuNSYEFJ45hdSRRIKpu02//ekURSlmNnY6RJiiA5BBA5HA4/znwzQ//085s37rvrOLKugAvKkp692WrbFiQBC2ly2bMzOdnYtd95P/7gnnD2JwTSGsCEZJE8JfwSpOjZHzIahbaFWhL8mkqZ/uY4IphCTEQrpgFngk1kK2CxE8IVRCwF7sTCz5c5W+12x0btluUOJcQHnGWpNSI+RD1bbdhnyYReZpxINFCUwii+aNYaJkGUhdCzB+Bnl98uaNLZ0itwTU2VV8i4Tn0wNyX/c08iIieMx16hxHXMdymBAyUei5Z/x7hPEAER8B3zlNRzGFiid73dfSh2qOJRkLvLtHvjtqJxrmM8tHRYdAB0ZXlTc9qDiPkkqtz0vK/85LyMMG9zp9V2nVvDyqt+h5uvjIel0+UrXUcPKQml7iCjofe3P9nxobu1vbG13fE3uru7Oxu7AUw23nY74e7bX0noB8E/xlWLNUrNJ8bkEYlBpCQA7xSE/Eg5+OiWrlOfUwswDEL2VZRhr4PBHKqdH+pOkVxNYUmFmYr7OGVcWupcPXtt/byvyOWEyGnzj0PDIf00bSn6aaWIvrAtZ9FdYEyGNKeLnt1YW69FaPPb2rq2vtno9RozTNGwNfXUluggqNPH6U0K3vs0jWhQMNNcnBbTCrozAcUuI+pzwikIT/IMcb49rhZoA08ZiwRI72qz26niSI8q4f6UcBJI4GOUPEsoUjfqro0uxR5Br67DWgW2Goc9HXATjK3/DLmLKYsAIbjkJD5OJY3pX8VVqutZOv2swBtufjrQX463IuU/HWwvxVeHqxF0nZjLxbUUuX8tIcmrTSQsiVWmSpaYX4uNCtnZ1FBbPEa2g7Ck5Put0Bw3ngLWq/ZKLFdLDoVNmMRu44FEzvOkOaB8Pl3NZJtWhmI6b81wLVxTIcU6ZqqV9TSaJmWNWEAizEcDIonOHyY93gvahwA1lw5eoTIdy5KCo2CiV5iWw6Q96uUBpeOsxmt56B+SvFk2QZu3G1jt0qQoZUvpGdpYrbLVrtaP+ixOaQRqAPnsgvAEaXiUN+de8R+LzdpgWfCg6Hgw6k8h+KIqJPNpBE44IP8HIATjle3Cuxgedbb2Pg/2P5wd7H3uHx+Nj0f7e7+sL5Fv5p3CYk1mq7xGx/6cJAEcYsmrTJofVbWaM39ud0STLxUG48wf3wgE3EMFAstC16mGzJYHkAC+Q5TV/LDcPm8z1N5Lp7URZs+yl6wAms15D7x1HTfFs0Wj6l0edO8fsyTID1p4R34K9Bd16IVTBrFhIjnFZB9oMd37LJgwi4xblYWn+TQCy3yj9LKjVy8rPfsRvWymC3lmZnnlFMVjj3jbmlNquXieUVfLJJoP/ueM8sol9/OuKoGhGxjPqN7jZx8YW0GamiJn/lH1dnN152ugLH+FMOpmWkj9lmfaTfWouLh3NI+k3r8=",
+      "after": "7VltU9tGEM7nzvQvdFQNHeOZYhFMExJkZRpDKFObl5jAl8wwsnS21Ug69e5EcJv+6v6B7r1aZ1skLgnJJPAB0N3eam/v2d1nT//+8OCB/+w6S50rRGiC8477sLXpOiiPcJzk445bstHGjvss+P47/4TgP1DEnD00CsuUnYVkjBjtuM/LJI1dB7Tk8DRhrHjqeTSaoCykrSyJCKZ4xFoRzrwYXaEUF4h4GR3yZd7W5mbbBe2O4x8ylB0QXBZOLxyitOOqF3ZxPkrGJQkZGEilMIgvm3UO8ygtY9Rx99CwHL+7SPL2ll4BayxVgZDxPXuQm8J//JM0ZCNMskAo8T3zLCVgQPpj2fL3GPcSpSik6D3mKanPYaD03vWj7dv6DlR8Es/dZNoH+21F43zPIFQCFgAAUGZTC7QHKR6G6Qym512Fk3MZYcHDx61N31sYVqj6HU3fYhJL0PGVvqeHlIRSd1AmcfD3cPR4iLa3Hm1sPWoPN7Z3dh5v7ERotPFkux3vPPkljIdR9I+Bqlij1LzEmB2FGaJFGKHgDFH2IiFoCLD0PXtOLYAwiPFbKsNeB4PZ1Cbf1I0icxs8ZeeDy6v2JuBjboOnrE9FTnEgtOKER33Hbaytm/Fmo9NpNJzjl86P+9cJZXTdmn39J2sxmZwaTTdYW+8PhDrluD3YZsQwmTZfG42+Z/6VR8uDe3a2Kj9lBSbMUWo67tr6eVclwZOQTZqv+ybXdYuipdJkqwBN1HW8ZZixN2hlkua7tXXtZbHhSkZruDpFWkt0sNpp7mxaoODXokiTSGTQuXwiptXZvKJIvKWXDElIEkQDRkrAw+K4WqANPMM4pYgFVw+327N416NKuDsJSRgxRAYg+SpPoMSAbmuUSwq0zvveOo45XFg+WHCblWvvznEjyAEfzXMXE5wicMGYhNlxwZIs+UscpTqe2unP6nhTQ+7O6V8PWqE03Z3bvhasHq6WoO3EvLjYlIQmVJTLWLJeqvN5JXXXFKG5JVCLlhcBxXZPGeRFBqQbikVFOZS2mxOcXReWlplbvmE+hX6Kd1SzxafQr/cgA0u9QVZvh9OgjmuO+wizF7jMoaV5jqABQKrGd9xuSRnOBJfY7aZdnBVJiqzDej8fqWctp0xCi3MWlbj7iNJwjByJzTCPwMzfkvHEdc7QNauY/NSJcJnGTo6Zk2Ko88iZkaCf+f8C7LsO/BE9XBZOhbBowmAx4ZwonbYMRD256yrzsWju/jVDOe8YDWgD4MciAIVc7cIBsAAUux8oDUVPUIHBBEGvafl6tcDQLl0McyA3hBNe4IXzFK7CwFoliC2JfWQI6Mp6eEJQkdmDM0uBo+2FLNScSh8FMKJFow1YOYnVZilUf9Ax3MaxOpZEY9wwaF20cmWXWAf8Lbq2kgbvEcusjPMxECuy/zftWO1Fy7U8Tvshv6jTSUdcxkEHm+Si/5bS/5uVaI+boqkGILVdhCQHztPjF4OB+A0NpDUoayGIDvZ63QmK3qiuxzwagROCCoIjKJqYzGynwcXhUXtr93Jv//mrg93L7vHR4Li3v/vTeo18k3egyzWZV3FKBneDvCT3oY1VJs2PGvE+3Jcm4Hppm2QO1Q6ufl6qgDZZ8w3ty16Sv5m5cVAOB1MKF6gB2EChW/S92ZAx4wDlCK5RZZN/KHfAr1eU+bXT2gjzTnkVNvNxteSDEXMTK9HZmuIyv//VoPOizCO+UQEwvguAnNr00injscOckQR4TqTF9JXIkgmzyCBT9qPm0QjUwUsC9egeqLVIlB6tnb5LoC4p1bcDqcHJqrC5z2x+LSK+IMDozGaRkNtBRmelLzyv3We0OwPorBJDhTTgmn0XrX7oaUVFYQjf/MetxW7uxq8dTH5wMeoWl1da1tndhNXw1dyjVT7m6As0qd3isOZCQl3XLN4wmM9gwX8="
+    }
+  }
+}]]></FlowDocument.Tag>
+  <Section Margin="0,24" TextAlignment="Center">
+    <Paragraph FontSize="24" FontWeight="Bold" Margin="12,0">
+      <LineBreak />
+      <Span Foreground="Gray">Qt Visual Studio Tools</Span>
+    </Paragraph>
+    <Paragraph FontSize="42" Margin="12,0" FontWeight="Bold">
+      <Span TextDecorations="Underline">Project Format Conversion</Span>
+    </Paragraph>
+    <Paragraph Margin="12,8" FontSize="18">
+      <Span>Report generated on 2025-11-25 14:24:05</Span>
+    </Paragraph>
+  </Section>
+  <Section>
+    <Paragraph FontSize="32" FontWeight="Bold" Margin="12,0">
+      <Span>Files</Span>
+    </Paragraph>
+    <Paragraph Margin="24,12,0,0">
+      <Span FontFamily="Consolas" FontSize="14" Background="WhiteSmoke"><![CDATA[C:\Users\miglio\OneDrive - TXT e-solutions S.p.A\Documents\GitKraken\HomeInventory\TestFirebase\TestFirebase.vcxproj]]></Span>
+      <LineBreak />
+      <Hyperlink NavigateUri="file://C:\Users\miglio\OneDrive - TXT e-solutions S.p.A\Documents\GitKraken\HomeInventory\TestFirebase\TestFirebase.vcxproj?before">[Before]</Hyperlink>
+      <Hyperlink NavigateUri="file://C:\Users\miglio\OneDrive - TXT e-solutions S.p.A\Documents\GitKraken\HomeInventory\TestFirebase\TestFirebase.vcxproj?after">[After]</Hyperlink>
+      <Hyperlink NavigateUri="file://C:\Users\miglio\OneDrive - TXT e-solutions S.p.A\Documents\GitKraken\HomeInventory\TestFirebase\TestFirebase.vcxproj?diff&amp;before&amp;after">
+                        [Diff before/after]
+                    </Hyperlink>
+      <Hyperlink NavigateUri="file://C:\Users\miglio\OneDrive - TXT e-solutions S.p.A\Documents\GitKraken\HomeInventory\TestFirebase\TestFirebase.vcxproj?diff&amp;before&amp;current">
+                        [Diff before/current]
+                    </Hyperlink>
+      <Hyperlink NavigateUri="file://C:\Users\miglio\OneDrive - TXT e-solutions S.p.A\Documents\GitKraken\HomeInventory\TestFirebase\TestFirebase.vcxproj?diff&amp;after&amp;current">
+                        [Diff after/current]
+                    </Hyperlink>
+      <LineBreak />
+    </Paragraph>
+  </Section>
+  <Section>
+    <Paragraph FontSize="32" FontWeight="Bold" Margin="12,0">
+      <Span>Changes</Span>
+    </Paragraph>
+    <Paragraph FontSize="20" FontWeight="Bold" Margin="12">
+      <Span><![CDATA[🡺 Enabling multi-processor compilation]]></Span>
+    </Paragraph>
+    <Table CellSpacing="0" BorderBrush="Gray" BorderThickness="0.5">
+      <Table.Columns>
+        <TableColumn />
+        <TableColumn />
+      </Table.Columns>
+      <TableRowGroup>
+        <TableRow Background="Orange">
+          <TableCell ColumnSpan="2" BorderThickness="0.5" BorderBrush="Gray">
+            <Paragraph Margin="10,5" FontWeight="Bold">
+              <Span><![CDATA[C:\Users\miglio\OneDrive - TXT e-solutions S.p.A\Documents\GitKraken\HomeInventory\TestFirebase\TestFirebase.vcxproj]]></Span>
+            </Paragraph>
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell ColumnSpan="2" Background="WhiteSmoke" BorderBrush="Gray" BorderThickness="0.5" />
+        </TableRow>
+        <TableRow>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0" />
+          </TableCell>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0">
+              <Span Background="LightGreen"><![CDATA[      <MultiProcessorCompilation>true</MultiProcessorCompilation>]]></Span>
+            </Paragraph>
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell ColumnSpan="2" Background="WhiteSmoke" BorderBrush="Gray" BorderThickness="0.5" />
+        </TableRow>
+        <TableRow>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0" />
+          </TableCell>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0">
+              <Span Background="LightGreen"><![CDATA[      <MultiProcessorCompilation>true</MultiProcessorCompilation>]]></Span>
+            </Paragraph>
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell ColumnSpan="2" Background="WhiteSmoke" BorderBrush="Gray" BorderThickness="0.5" />
+        </TableRow>
+        <TableRow>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0" />
+          </TableCell>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0">
+              <Span Background="LightGreen"><![CDATA[      <MultiProcessorCompilation>true</MultiProcessorCompilation>]]></Span>
+            </Paragraph>
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell ColumnSpan="2" Background="WhiteSmoke" BorderBrush="Gray" BorderThickness="0.5" />
+        </TableRow>
+        <TableRow>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0" />
+          </TableCell>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0">
+              <Span Background="LightGreen"><![CDATA[      <MultiProcessorCompilation>true</MultiProcessorCompilation>]]></Span>
+            </Paragraph>
+          </TableCell>
+        </TableRow>
+      </TableRowGroup>
+    </Table>
+    <Paragraph FontSize="20" FontWeight="Bold" Margin="12">
+      <Span><![CDATA[🡺 Project format version]]></Span>
+    </Paragraph>
+    <Table CellSpacing="0" BorderBrush="Gray" BorderThickness="0.5">
+      <Table.Columns>
+        <TableColumn />
+        <TableColumn />
+      </Table.Columns>
+      <TableRowGroup>
+        <TableRow Background="Orange">
+          <TableCell ColumnSpan="2" BorderThickness="0.5" BorderBrush="Gray">
+            <Paragraph Margin="10,5" FontWeight="Bold">
+              <Span><![CDATA[C:\Users\miglio\OneDrive - TXT e-solutions S.p.A\Documents\GitKraken\HomeInventory\TestFirebase\TestFirebase.vcxproj]]></Span>
+            </Paragraph>
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell ColumnSpan="2" Background="WhiteSmoke" BorderBrush="Gray" BorderThickness="0.5" />
+        </TableRow>
+        <TableRow>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0" />
+          </TableCell>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0">
+              <Span Background="LightGreen"><![CDATA[    <Keyword>QtVS_v304</Keyword>]]></Span>
+            </Paragraph>
+          </TableCell>
+        </TableRow>
+      </TableRowGroup>
+    </Table>
+    <Paragraph FontSize="20" FontWeight="Bold" Margin="12">
+      <Span><![CDATA[🡺 Fallback for QTMSBUILD environment variable]]></Span>
+    </Paragraph>
+    <Table CellSpacing="0" BorderBrush="Gray" BorderThickness="0.5">
+      <Table.Columns>
+        <TableColumn />
+        <TableColumn />
+      </Table.Columns>
+      <TableRowGroup>
+        <TableRow Background="Orange">
+          <TableCell ColumnSpan="2" BorderThickness="0.5" BorderBrush="Gray">
+            <Paragraph Margin="10,5" FontWeight="Bold">
+              <Span><![CDATA[C:\Users\miglio\OneDrive - TXT e-solutions S.p.A\Documents\GitKraken\HomeInventory\TestFirebase\TestFirebase.vcxproj]]></Span>
+            </Paragraph>
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell ColumnSpan="2" Background="WhiteSmoke" BorderBrush="Gray" BorderThickness="0.5" />
+        </TableRow>
+        <TableRow>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0" />
+          </TableCell>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0">
+              <Span Background="LightGreen"><![CDATA[    <QtMsBuild Condition="'$(QtMsBuild)'=='' OR !Exists('$(QtMsBuild)\qt.targets')">$(MSBuildProjectDirectory)\QtMsBuild</QtMsBuild>]]></Span>
+            </Paragraph>
+          </TableCell>
+        </TableRow>
+      </TableRowGroup>
+    </Table>
+    <Paragraph FontSize="20" FontWeight="Bold" Margin="12">
+      <Span><![CDATA[🡺 Default Qt properties]]></Span>
+    </Paragraph>
+    <Table CellSpacing="0" BorderBrush="Gray" BorderThickness="0.5">
+      <Table.Columns>
+        <TableColumn />
+        <TableColumn />
+      </Table.Columns>
+      <TableRowGroup>
+        <TableRow Background="Orange">
+          <TableCell ColumnSpan="2" BorderThickness="0.5" BorderBrush="Gray">
+            <Paragraph Margin="10,5" FontWeight="Bold">
+              <Span><![CDATA[C:\Users\miglio\OneDrive - TXT e-solutions S.p.A\Documents\GitKraken\HomeInventory\TestFirebase\TestFirebase.vcxproj]]></Span>
+            </Paragraph>
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell ColumnSpan="2" Background="WhiteSmoke" BorderBrush="Gray" BorderThickness="0.5" />
+        </TableRow>
+        <TableRow>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0" />
+          </TableCell>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0">
+              <Span Background="LightGreen"><![CDATA[  <Import Project="$(QtMsBuild)\qt_defaults.props" Condition="Exists('$(QtMsBuild)\qt_defaults.props')" />]]></Span>
+            </Paragraph>
+          </TableCell>
+        </TableRow>
+      </TableRowGroup>
+    </Table>
+    <Paragraph FontSize="20" FontWeight="Bold" Margin="12">
+      <Span><![CDATA[🡺 Qt build settings]]></Span>
+    </Paragraph>
+    <Table CellSpacing="0" BorderBrush="Gray" BorderThickness="0.5">
+      <Table.Columns>
+        <TableColumn />
+        <TableColumn />
+      </Table.Columns>
+      <TableRowGroup>
+        <TableRow Background="Orange">
+          <TableCell ColumnSpan="2" BorderThickness="0.5" BorderBrush="Gray">
+            <Paragraph Margin="10,5" FontWeight="Bold">
+              <Span><![CDATA[C:\Users\miglio\OneDrive - TXT e-solutions S.p.A\Documents\GitKraken\HomeInventory\TestFirebase\TestFirebase.vcxproj]]></Span>
+            </Paragraph>
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell ColumnSpan="2" Background="WhiteSmoke" BorderBrush="Gray" BorderThickness="0.5" />
+        </TableRow>
+        <TableRow>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0" />
+          </TableCell>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0">
+              <Span Background="LightGreen"><![CDATA[  <PropertyGroup Label="QtSettings" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />]]></Span>
+            </Paragraph>
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0" />
+          </TableCell>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0">
+              <Span Background="LightGreen"><![CDATA[  <PropertyGroup Label="QtSettings" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />]]></Span>
+            </Paragraph>
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0" />
+          </TableCell>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0">
+              <Span Background="LightGreen"><![CDATA[  <PropertyGroup Label="QtSettings" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" />]]></Span>
+            </Paragraph>
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0" />
+          </TableCell>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0">
+              <Span Background="LightGreen"><![CDATA[  <PropertyGroup Label="QtSettings" Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />]]></Span>
+            </Paragraph>
+          </TableCell>
+        </TableRow>
+      </TableRowGroup>
+    </Table>
+    <Paragraph FontSize="20" FontWeight="Bold" Margin="12">
+      <Span><![CDATA[🡺 Warn if Qt/MSBuild is not found]]></Span>
+    </Paragraph>
+    <Table CellSpacing="0" BorderBrush="Gray" BorderThickness="0.5">
+      <Table.Columns>
+        <TableColumn />
+        <TableColumn />
+      </Table.Columns>
+      <TableRowGroup>
+        <TableRow Background="Orange">
+          <TableCell ColumnSpan="2" BorderThickness="0.5" BorderBrush="Gray">
+            <Paragraph Margin="10,5" FontWeight="Bold">
+              <Span><![CDATA[C:\Users\miglio\OneDrive - TXT e-solutions S.p.A\Documents\GitKraken\HomeInventory\TestFirebase\TestFirebase.vcxproj]]></Span>
+            </Paragraph>
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell ColumnSpan="2" Background="WhiteSmoke" BorderBrush="Gray" BorderThickness="0.5" />
+        </TableRow>
+        <TableRow>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0" />
+          </TableCell>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0">
+              <Span Background="LightGreen"><![CDATA[  <Target Name="QtMsBuildNotFound" BeforeTargets="CustomBuild;ClCompile" Condition="!Exists('$(QtMsBuild)\qt.targets') OR !Exists('$(QtMsBuild)\Qt.props')">]]></Span>
+            </Paragraph>
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0" />
+          </TableCell>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0">
+              <Span Background="LightGreen"><![CDATA[    <Message Importance="High" Text="QtMsBuild: could not locate qt.targets, qt.props; project may not build correctly." />]]></Span>
+            </Paragraph>
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0" />
+          </TableCell>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0">
+              <Span Background="LightGreen"><![CDATA[  </Target>]]></Span>
+            </Paragraph>
+          </TableCell>
+        </TableRow>
+      </TableRowGroup>
+    </Table>
+    <Paragraph FontSize="20" FontWeight="Bold" Margin="12">
+      <Span><![CDATA[🡺 Qt property sheet]]></Span>
+    </Paragraph>
+    <Table CellSpacing="0" BorderBrush="Gray" BorderThickness="0.5">
+      <Table.Columns>
+        <TableColumn />
+        <TableColumn />
+      </Table.Columns>
+      <TableRowGroup>
+        <TableRow Background="Orange">
+          <TableCell ColumnSpan="2" BorderThickness="0.5" BorderBrush="Gray">
+            <Paragraph Margin="10,5" FontWeight="Bold">
+              <Span><![CDATA[C:\Users\miglio\OneDrive - TXT e-solutions S.p.A\Documents\GitKraken\HomeInventory\TestFirebase\TestFirebase.vcxproj]]></Span>
+            </Paragraph>
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell ColumnSpan="2" Background="WhiteSmoke" BorderBrush="Gray" BorderThickness="0.5" />
+        </TableRow>
+        <TableRow>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0" />
+          </TableCell>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0">
+              <Span Background="LightGreen"><![CDATA[    <Import Project="$(QtMsBuild)\Qt.props" />]]></Span>
+            </Paragraph>
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell ColumnSpan="2" Background="WhiteSmoke" BorderBrush="Gray" BorderThickness="0.5" />
+        </TableRow>
+        <TableRow>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0" />
+          </TableCell>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0">
+              <Span Background="LightGreen"><![CDATA[    <Import Project="$(QtMsBuild)\Qt.props" />]]></Span>
+            </Paragraph>
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell ColumnSpan="2" Background="WhiteSmoke" BorderBrush="Gray" BorderThickness="0.5" />
+        </TableRow>
+        <TableRow>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0" />
+          </TableCell>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0">
+              <Span Background="LightGreen"><![CDATA[    <Import Project="$(QtMsBuild)\Qt.props" />]]></Span>
+            </Paragraph>
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell ColumnSpan="2" Background="WhiteSmoke" BorderBrush="Gray" BorderThickness="0.5" />
+        </TableRow>
+        <TableRow>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0" />
+          </TableCell>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0">
+              <Span Background="LightGreen"><![CDATA[    <Import Project="$(QtMsBuild)\Qt.props" />]]></Span>
+            </Paragraph>
+          </TableCell>
+        </TableRow>
+      </TableRowGroup>
+    </Table>
+    <Paragraph FontSize="20" FontWeight="Bold" Margin="12">
+      <Span><![CDATA[🡺 Qt targets]]></Span>
+    </Paragraph>
+    <Table CellSpacing="0" BorderBrush="Gray" BorderThickness="0.5">
+      <Table.Columns>
+        <TableColumn />
+        <TableColumn />
+      </Table.Columns>
+      <TableRowGroup>
+        <TableRow Background="Orange">
+          <TableCell ColumnSpan="2" BorderThickness="0.5" BorderBrush="Gray">
+            <Paragraph Margin="10,5" FontWeight="Bold">
+              <Span><![CDATA[C:\Users\miglio\OneDrive - TXT e-solutions S.p.A\Documents\GitKraken\HomeInventory\TestFirebase\TestFirebase.vcxproj]]></Span>
+            </Paragraph>
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell ColumnSpan="2" Background="WhiteSmoke" BorderBrush="Gray" BorderThickness="0.5" />
+        </TableRow>
+        <TableRow>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0" />
+          </TableCell>
+          <TableCell BorderThickness="0, 0, 0.5, 0" BorderBrush="Gray">
+            <Paragraph FontFamily="Consolas" Margin="4, 0">
+              <Span Background="LightGreen"><![CDATA[  <Import Project="$(QtMsBuild)\qt.targets" Condition="Exists('$(QtMsBuild)\qt.targets')" />]]></Span>
+            </Paragraph>
+          </TableCell>
+        </TableRow>
+      </TableRowGroup>
+    </Table>
+  </Section>
+  <Section>
+    <Paragraph />
+  </Section>
+</FlowDocument>
+<!--bXR/hsITa+HHC/iiDPROIHT0owmicB9iy/FrnjDMMUw=-->
