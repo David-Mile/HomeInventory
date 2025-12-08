@@ -26,12 +26,18 @@
     <ClInclude Include="IDatabaseManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="CredentialsManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="HomeObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="FirebaseDatabaseManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CredentialsManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

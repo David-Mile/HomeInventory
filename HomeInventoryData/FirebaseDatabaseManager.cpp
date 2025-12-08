@@ -7,17 +7,22 @@
 #include <QUrlQuery>
 #include <QDebug>
 #include <iostream>
+#include <QDateTime>
 
 FirebaseDatabaseManager::FirebaseDatabaseManager(QObject* parent)
     : QObject(parent)
     , m_isConnected(false)
+	, m_isAuthenticated(false)
     , m_networkManager(new QNetworkAccessManager(this))
+	, m_credentialsManager(new CredentialsManager())
+    , m_isRefreshingToken(false)
 {
 }
 
 FirebaseDatabaseManager::~FirebaseDatabaseManager()
 {
     disconnect();
+    delete m_credentialsManager;
 }
 
 bool FirebaseDatabaseManager::connect(const QString& firebaseUrl)
@@ -29,33 +34,341 @@ bool FirebaseDatabaseManager::connect(const QString& firebaseUrl)
         m_firebaseUrl.chop(1);
     }
 
-    // Test della connessione con una semplice GET request
-    QJsonDocument testDoc = performGetRequest("/.json");
+	m_isConnected = true; //(Checkare perchè mi sembra brutto metterlo a true senza/prima di testare la connessione)
 
-    if (!testDoc.isNull()) {
-        m_isConnected = true;
-        setLastError(QString());
-        std::cout << u8"✅ Connected to Firebase: ";
-        qDebug() << m_firebaseUrl;
-        return true;
+    std::cout << u8"🔗 Firebase URL configured: ";
+    qDebug() << m_firebaseUrl;
+
+    return true;
+    // Test della connessione con una semplice GET request
+    //QJsonDocument testDoc = performGetRequest("/.json");
+
+    //if (!testDoc.isNull()) {
+    //    m_isConnected = true;
+    //    setLastError(QString());
+    //    std::cout << u8"✅ Connected to Firebase: ";
+    //    qDebug() << m_firebaseUrl;
+    //    return true;
+    //}
+
+    //m_isConnected = false;
+    //setLastError("Failed to connect to Firebase database");
+    //std::cout << u8"❌ Failed to connect to Firebase: ";
+    //qDebug() << m_firebaseUrl;
+    //return false;
+}
+
+bool FirebaseDatabaseManager::setApiKey(const QString& apiKey)
+{
+    if (apiKey.isEmpty()) {
+        setLastError("API Key cannot be empty");
+        return false;
     }
 
-    m_isConnected = false;
-    setLastError("Failed to connect to Firebase database");
-    std::cout << u8"❌ Failed to connect to Firebase: ";
-    qDebug() << m_firebaseUrl;
-    return false;
+    m_apiKey = apiKey;
+    std::cout << u8"🔑 API Key configured\n";
+    return true;
+}
+
+bool FirebaseDatabaseManager::tryAutoLogin()
+{
+    if (!m_credentialsManager->hasStoredCredentials()) {
+        std::cout << u8"ℹ️ No saved credentials found\n";
+        return false;
+    }
+
+    std::cout << u8"🔐 Attempting auto-login with saved credentials...\n";
+
+    QString email, password;
+    if (!m_credentialsManager->loadCredentials(email, password)) {
+        setLastError("Failed to load saved credentials");
+        return false;
+    }
+
+    // Prova prima con il refresh token se disponibile
+    QString refreshToken = m_credentialsManager->loadRefreshToken();
+    if (!refreshToken.isEmpty()) {
+        m_refreshToken = refreshToken;
+        if (refreshAccessToken()) {
+            m_userEmail = email;
+            m_isAuthenticated = true;
+            std::cout << u8"✅ Auto-login successful with refresh token!\n";
+            std::cout << u8"👤 Logged in as: ";
+            qDebug() << m_userEmail;
+            emit authenticationCompleted(true, m_userEmail);
+            return true;
+        }
+    }
+
+    // Altrimenti usa email e password
+    bool success = signInWithEmailPassword(email, password);
+    if (success) {
+        std::cout << u8"✅ Auto-login successful!\n";
+        std::cout << u8"👤 Logged in as: ";
+        qDebug() << m_userEmail;
+        emit authenticationCompleted(true, m_userEmail);
+    }
+
+    return success;
+}
+
+bool FirebaseDatabaseManager::authenticateWithEmail(const QString& email, const QString& password, bool rememberMe)
+{
+    if (email.isEmpty() || password.isEmpty()) {
+        setLastError("Email and password cannot be empty");
+        return false;
+    }
+
+    std::cout << u8"🔐 Authenticating with email/password...\n";
+
+    bool success = signInWithEmailPassword(email, password);
+
+    if (success) {
+        std::cout << u8"✅ Authentication successful!\n";
+        std::cout << u8"👤 Logged in as: ";
+        qDebug() << m_userEmail;
+
+        // Salva le credenziali se richiesto
+        if (rememberMe) {
+            if (m_credentialsManager->saveCredentials(email, password)) {
+                std::cout << u8"💾 Credentials saved for auto-login\n";
+            }
+            if (!m_refreshToken.isEmpty()) {
+                m_credentialsManager->saveRefreshToken(m_refreshToken);
+            }
+        }
+
+        emit authenticationCompleted(true, m_userEmail);
+    }
+    else {
+        std::cout << u8"❌ Authentication failed!\n";
+        emit authenticationCompleted(false, "");
+    }
+
+    return success;
+}
+
+bool FirebaseDatabaseManager::signInWithEmailPassword(const QString& email, const QString& password)
+{
+    if (m_apiKey.isEmpty()) {
+        setLastError("API Key not configured. Call setApiKey() first.");
+        return false;
+    }
+
+    QUrl url("https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword");
+    QUrlQuery query;
+    query.addQueryItem("key", m_apiKey);
+    url.setQuery(query);
+
+    QNetworkRequest request(url);
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+
+    QJsonObject postData;
+    postData["email"] = email;
+    postData["password"] = password;
+    postData["returnSecureToken"] = true;
+
+    QJsonDocument doc(postData);
+    QNetworkReply* reply = m_networkManager->post(request, doc.toJson());
+
+    QEventLoop loop;
+    QTimer timer;
+    timer.setSingleShot(true);
+
+    QObject::connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
+    QObject::connect(&timer, &QTimer::timeout, &loop, &QEventLoop::quit);
+
+    timer.start(10000);
+    loop.exec();
+
+    if (!timer.isActive()) {
+        setLastError("Request timeout");
+        reply->deleteLater();
+        return false;
+    }
+    timer.stop();
+
+    bool success = false;
+
+    if (reply->error() == QNetworkReply::NoError) {
+        QByteArray response = reply->readAll();
+        QJsonDocument responseDoc = QJsonDocument::fromJson(response);
+        QJsonObject responseObj = responseDoc.object();
+
+        m_idToken = responseObj["idToken"].toString();
+        m_refreshToken = responseObj["refreshToken"].toString();
+        m_userEmail = responseObj["email"].toString();
+        m_userId = responseObj["localId"].toString();
+
+        int expiresIn = responseObj["expiresIn"].toString().toInt();
+        if (expiresIn == 0) expiresIn = 3600; // Default 1 hr
+		m_tokenExpiry = QDateTime::currentDateTime().addSecs(expiresIn - 300); // Refresh 5 min before expiry
+
+        m_isAuthenticated = !m_idToken.isEmpty();
+        success = m_isAuthenticated;
+    }
+    else {
+        QByteArray response = reply->readAll();
+        QJsonDocument responseDoc = QJsonDocument::fromJson(response);
+        QJsonObject errorObj = responseDoc.object()["error"].toObject();
+        QString errorMessage = errorObj["message"].toString();
+
+        // Messaggi di errore user-friendly
+        if (errorMessage.contains("INVALID_PASSWORD")) {
+            setLastError("Invalid password");
+        }
+        else if (errorMessage.contains("EMAIL_NOT_FOUND")) {
+            setLastError("Email not found");
+        }
+        else if (errorMessage.contains("USER_DISABLED")) {
+            setLastError("This account has been disabled");
+        }
+        else if (errorMessage.contains("TOO_MANY_ATTEMPTS")) {
+            setLastError("Too many failed attempts. Please try again later");
+        }
+        else {
+            setLastError("Authentication failed: " + errorMessage);
+        }
+    }
+
+    reply->deleteLater();
+    return success;
+}
+
+bool FirebaseDatabaseManager::refreshAccessToken()
+{
+    if (m_isRefreshingToken) {
+        std::cout << u8"⏳ Token refresh already in progress, skipping...\n";
+        return false;
+    }
+
+    if (m_refreshToken.isEmpty()) {
+        setLastError("No refresh token available");
+        return false;
+    }
+
+    if (m_apiKey.isEmpty()) {
+        setLastError("API Key not configured");
+        return false;
+    }
+
+    std::cout << u8"🔄 Starting token refresh...\n";
+	m_isRefreshingToken = true;
+
+    QUrl url("https://securetoken.googleapis.com/v1/token");
+    QUrlQuery query;
+    query.addQueryItem("key", m_apiKey);
+    url.setQuery(query);
+
+    QNetworkRequest request(url);
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
+
+    QString postData = QString("grant_type=refresh_token&refresh_token=%1").arg(m_refreshToken);
+
+    QNetworkReply* reply = m_networkManager->post(request, postData.toUtf8());
+
+    QEventLoop loop;
+    QTimer timer;
+    timer.setSingleShot(true);
+
+    QObject::connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
+    QObject::connect(&timer, &QTimer::timeout, &loop, &QEventLoop::quit);
+
+    timer.start(10000);
+    loop.exec();
+
+    if (!timer.isActive()) {
+        setLastError("Token refresh timeout");
+        reply->deleteLater();
+		m_isRefreshingToken = false;
+        return false;
+    }
+    timer.stop();
+
+    bool success = false;
+
+    if (reply->error() == QNetworkReply::NoError) {
+        QByteArray responseData = reply->readAll();
+        // std::cout << u8"📥 Refresh response:"; qDebug() << responseData;  // DUBUG: print all json response data, very long, decomment only if needed
+
+        QJsonDocument responseDoc = QJsonDocument::fromJson(responseData);
+        QJsonObject responseObj = responseDoc.object();
+
+        QString newIdToken = responseObj["id_token"].toString();
+        QString newRefreshToken = responseObj["refresh_token"].toString();
+
+        if (!newIdToken.isEmpty()) {
+            m_idToken = newIdToken;
+            m_refreshToken = newRefreshToken;
+
+            // Aggiorna la scadenza del token
+            int expiresIn = responseObj["expires_in"].toString().toInt();
+            if (expiresIn == 0) expiresIn = 3600;
+            m_tokenExpiry = QDateTime::currentDateTime().addSecs(expiresIn - 300);
+
+            success = true;
+
+            // Salva il nuovo refresh token
+            m_credentialsManager->saveRefreshToken(m_refreshToken);
+
+            std::cout << u8"\n✅ Token refreshed successfully";
+            std::cout << u8"\n🔑 New token length:" << m_idToken.length();
+            std::cout << u8"\n⏰ Token expires:";
+            qDebug() << m_tokenExpiry.toString();
+        }
+        else {
+            setLastError("Token refresh returned empty token");
+            std::cout << u8"\n❌ Empty token in response";
+        }
+    }
+    else {
+        QByteArray errorData = reply->readAll();
+        std::cout << u8"\n❌ Refresh error:" << errorData;
+        setLastError("Token refresh failed: " + reply->errorString());
+    }
+
+    reply->deleteLater();
+	m_isRefreshingToken = false;
+    return success;
 }
 
 void FirebaseDatabaseManager::disconnect()
 {
     m_isConnected = false;
+    m_isAuthenticated = false;
     m_firebaseUrl.clear();
+    m_idToken.clear();
+    m_refreshToken.clear();
+    m_userEmail.clear();
+    m_userId.clear();
+}
+
+void FirebaseDatabaseManager::logout(bool clearSavedCredentials)
+{
+    std::cout << u8"👋 Logging out user: ";
+    qDebug() << m_userEmail;
+
+    if (clearSavedCredentials) {
+        m_credentialsManager->clearCredentials();
+        std::cout << u8"🗑️ Saved credentials cleared\n";
+    }
+
+    disconnect();
 }
 
 bool FirebaseDatabaseManager::isConnected() const
 {
     return m_isConnected;
+}
+
+bool FirebaseDatabaseManager::isAuthenticated() const
+{
+    return m_isAuthenticated;
+}
+
+QString FirebaseDatabaseManager::currentUserEmail() const
+{
+    return m_userEmail;
 }
 
 QString FirebaseDatabaseManager::lastError() const
@@ -74,12 +387,35 @@ void FirebaseDatabaseManager::setLastError(const QString& error)
 
 QString FirebaseDatabaseManager::buildUrl(const QString& path) const
 {
-    return m_firebaseUrl + path;
+    QString url = m_firebaseUrl + path;
+
+    if (m_isAuthenticated && !m_idToken.isEmpty()) {
+        QUrl qUrl(url);
+        QUrlQuery query(qUrl);
+        query.addQueryItem("auth", m_idToken);
+        qUrl.setQuery(query);
+
+        // DEBUG: Stampa l'URL (solo i primi caratteri del token per sicurezza)
+        std::cout << u8"🔗 Request URL: "; 
+        qDebug() << qUrl.toString().left(100) + "...";
+        std::cout << u8"🔑 Token present:" << !m_idToken.isEmpty() << "Length:" << m_idToken.length() << "\n";
+
+        return qUrl.toString();
+    }
+
+    std::cout << u8"⚠️ Building URL without auth token!\n";
+    return url;
 }
 
 // ==================== GET REQUEST ====================
-QJsonDocument FirebaseDatabaseManager::performGetRequest(const QString& path)
+QJsonDocument FirebaseDatabaseManager::performGetRequest(const QString& path, int retryCount)
 {
+    if(!m_isAuthenticated) {
+        setLastError("Not authenticated. Please log in first.");
+        emit authenticationRequired();
+        return QJsonDocument();
+	}
+
     QUrl url(buildUrl(path));
     QNetworkRequest request(url);
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
@@ -104,6 +440,23 @@ QJsonDocument FirebaseDatabaseManager::performGetRequest(const QString& path)
     }
     timer.stop();
 
+    if (reply->error() == QNetworkReply::AuthenticationRequiredError) {
+        reply->deleteLater();
+
+        if (retryCount < 1) {  // <-- CAMBIATO: solo 1 retry
+            std::cout << u8"⚠️ Authentication error, attempting token refresh...\n";
+            if (refreshAccessToken()) {
+                std::cout << u8"🔄 Retrying request after token refresh...\n";
+                return performGetRequest(path, retryCount + 1);  // <-- Incrementa retry
+            }
+        }
+
+        setLastError("Authentication expired. Please login again.");
+        m_isAuthenticated = false; 
+        emit authenticationRequired();
+        return QJsonDocument();
+    }
+
     if (reply->error() != QNetworkReply::NoError) {
         setLastError(reply->errorString());
         reply->deleteLater();
@@ -125,8 +478,14 @@ QJsonDocument FirebaseDatabaseManager::performGetRequest(const QString& path)
 }
 
 // ==================== PUT REQUEST ====================
-bool FirebaseDatabaseManager::performPutRequest(const QString& path, const QJsonValue& data)
+bool FirebaseDatabaseManager::performPutRequest(const QString& path, const QJsonValue& data, int retryCount)
 {
+    if (!m_isAuthenticated) {
+        setLastError("Not authenticated. Please log in first.");
+        emit authenticationRequired();
+        return false;
+    }
+
     QUrl url(buildUrl(path));
     QNetworkRequest request(url);
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
@@ -140,7 +499,6 @@ bool FirebaseDatabaseManager::performPutRequest(const QString& path, const QJson
     }
 
     QByteArray jsonData = doc.toJson(QJsonDocument::Compact);
-
     QNetworkReply* reply = m_networkManager->put(request, jsonData);
 
     QEventLoop loop;
@@ -160,6 +518,23 @@ bool FirebaseDatabaseManager::performPutRequest(const QString& path, const QJson
     }
     timer.stop();
 
+    if (reply->error() == QNetworkReply::AuthenticationRequiredError) {
+        reply->deleteLater();
+
+        if (retryCount < 1) {  // <-- Solo 1 retry
+            std::cout << u8"\n⚠️ Authentication error, attempting token refresh...";
+            if (refreshAccessToken()) {
+                std::cout << u8"\n🔄 Retrying request after token refresh...";
+                return performPutRequest(path, data, retryCount + 1);
+            }
+        }
+
+        setLastError("Authentication expired. Please login again.");
+        m_isAuthenticated = false;
+        emit authenticationRequired();
+        return false;
+    }
+
     bool success = (reply->error() == QNetworkReply::NoError);
     if (!success) {
         setLastError(reply->errorString());
@@ -173,8 +548,14 @@ bool FirebaseDatabaseManager::performPutRequest(const QString& path, const QJson
 }
 
 // ==================== POST REQUEST ====================
-bool FirebaseDatabaseManager::performPostRequest(const QString& path, const QJsonValue& data)
+bool FirebaseDatabaseManager::performPostRequest(const QString& path, const QJsonValue& data, int retryCount)
 {
+    if (!m_isAuthenticated) {
+        setLastError("Not authenticated. Please login first.");
+        emit authenticationRequired();
+        return false;
+    }
+
     QUrl url(buildUrl(path));
     QNetworkRequest request(url);
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
@@ -208,6 +589,23 @@ bool FirebaseDatabaseManager::performPostRequest(const QString& path, const QJso
     }
     timer.stop();
 
+    if (reply->error() == QNetworkReply::AuthenticationRequiredError) {
+        reply->deleteLater();
+
+        if (retryCount < 1) {
+            std::cout << u8"\n⚠️ Authentication error, attempting token refresh...";
+            if (refreshAccessToken()) {
+                std::cout << u8"\n🔄 Retrying request after token refresh...";
+                return performPostRequest(path, data, retryCount + 1);
+            }
+        }
+
+        setLastError("Authentication expired. Please login again.");
+        m_isAuthenticated = false;
+        emit authenticationRequired();
+        return false;
+    }
+
     bool success = (reply->error() == QNetworkReply::NoError);
     if (!success) {
         setLastError(reply->errorString());
@@ -221,8 +619,14 @@ bool FirebaseDatabaseManager::performPostRequest(const QString& path, const QJso
 }
 
 // ==================== DELETE REQUEST ====================
-bool FirebaseDatabaseManager::performDeleteRequest(const QString& path)
+bool FirebaseDatabaseManager::performDeleteRequest(const QString& path, int retryCount)
 {
+    if (!m_isAuthenticated) {
+        setLastError("Not authenticated. Please log in first.");
+        emit authenticationRequired();
+        return false;
+    }
+
     QUrl url(buildUrl(path));
     QNetworkRequest request(url);
 
@@ -245,6 +649,23 @@ bool FirebaseDatabaseManager::performDeleteRequest(const QString& path)
     }
     timer.stop();
 
+    if (reply->error() == QNetworkReply::AuthenticationRequiredError) {
+        reply->deleteLater();
+
+        if (retryCount < 1) {
+            std::cout << u8"\n⚠️ Authentication error, attempting token refresh...";
+            if (refreshAccessToken()) {
+                std::cout << u8"\n🔄 Retrying request after token refresh...";
+                return performPostRequest(path, retryCount + 1);
+            }
+        }
+
+        setLastError("Authentication expired. Please login again.");
+        m_isAuthenticated = false;
+        emit authenticationRequired();
+        return false;
+    }
+
     bool success = (reply->error() == QNetworkReply::NoError);
     if (!success) {
         setLastError(reply->errorString());
@@ -258,8 +679,14 @@ bool FirebaseDatabaseManager::performDeleteRequest(const QString& path)
 }
 
 // ==================== PATCH REQUEST ====================
-bool FirebaseDatabaseManager::performPatchRequest(const QString& path, const QJsonValue& data)
+bool FirebaseDatabaseManager::performPatchRequest(const QString& path, const QJsonValue& data, int retryCount)
 {
+    if (!m_isAuthenticated) {
+        setLastError("Not authenticated. Please log in first.");
+        emit authenticationRequired();
+        return false;
+	}
+
     QUrl url(buildUrl(path));
     QNetworkRequest request(url);
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
@@ -290,6 +717,23 @@ bool FirebaseDatabaseManager::performPatchRequest(const QString& path, const QJs
         return false;
     }
     timer.stop();
+
+    if (reply->error() == QNetworkReply::AuthenticationRequiredError) {
+        reply->deleteLater();
+
+        if (retryCount < 1) {
+            std::cout << u8"\n⚠️ Authentication error, attempting token refresh...";
+            if (refreshAccessToken()) {
+                std::cout << u8"\n🔄 Retrying request after token refresh...";
+                return performPostRequest(path, data, retryCount + 1);
+            }
+        }
+
+        setLastError("Authentication expired. Please login again.");
+        m_isAuthenticated = false;
+        emit authenticationRequired();
+        return false;
+    }
 
     bool success = (reply->error() == QNetworkReply::NoError);
     if (!success) {
@@ -347,9 +791,10 @@ HomeObject FirebaseDatabaseManager::jsonToObject(const QString& key, const QJson
 
 bool FirebaseDatabaseManager::createObject(const HomeObject& object)
 {
-    if (!isConnected()) {
-        setLastError("Not connected to database");
-        return false;
+    if (!isAuthenticated()) {
+		setLastError("Not authenticated");
+        emit authenticationRequired();
+		return false;   
     }
 
     if (!object.isValid()) {
@@ -374,8 +819,9 @@ QList<HomeObject> FirebaseDatabaseManager::getAllObjects()
 {
     QList<HomeObject> objects;
 
-    if (!isConnected()) {
-        setLastError("Not connected to database");
+    if (!isAuthenticated()) {
+        setLastError("Not authenticated");
+        emit authenticationRequired();
         return objects;
     }
 
@@ -415,8 +861,9 @@ QList<HomeObject> FirebaseDatabaseManager::getObjects(int locationId, int subloc
 
 bool FirebaseDatabaseManager::updateObject(const QString& oldName, const HomeObject& newObject)
 {
-    if (!isConnected()) {
-        setLastError("Not connected to database");
+    if (!isAuthenticated()) {
+        setLastError("Not authenticated");
+        emit authenticationRequired();
         return false;
     }
 
@@ -432,8 +879,9 @@ bool FirebaseDatabaseManager::updateObject(const QString& oldName, const HomeObj
 
 bool FirebaseDatabaseManager::deleteObject(const QString& objectName)
 {
-    if (!isConnected()) {
-        setLastError("Not connected to database");
+    if (!isAuthenticated()) {
+        setLastError("Not authenticated");
+        emit authenticationRequired();
         return false;
     }
 
@@ -502,8 +950,9 @@ QStringList FirebaseDatabaseManager::getColors()
 {
     QStringList colors;
 
-    if (!isConnected()) {
-        setLastError("Not connected to database");
+    if (!isAuthenticated()) {
+        setLastError("Not authenticated");
+        emit authenticationRequired();
         return colors;
     }
 
@@ -524,8 +973,9 @@ QStringList FirebaseDatabaseManager::getMaterials()
 {
     QStringList materials;
 
-    if (!isConnected()) {
-        setLastError("Not connected to database");
+    if (!isAuthenticated()) {
+        setLastError("Not authenticated");
+        emit authenticationRequired();
         return materials;
     }
 
@@ -546,8 +996,9 @@ QStringList FirebaseDatabaseManager::getTypes()
 {
     QStringList types;
 
-    if (!isConnected()) {
-        setLastError("Not connected to database");
+    if (!isAuthenticated()) {
+        setLastError("Not authenticated");
+        emit authenticationRequired();
         return types;
     }
 
@@ -566,8 +1017,9 @@ QStringList FirebaseDatabaseManager::getTypes()
 
 bool FirebaseDatabaseManager::addColor(const QString& color)
 {
-    if (!isConnected()) {
-        setLastError("Not connected to database");
+    if (!isAuthenticated()) {
+        setLastError("Not authenticated");
+        emit authenticationRequired();
         return false;
     }
 
@@ -590,8 +1042,9 @@ bool FirebaseDatabaseManager::addColor(const QString& color)
 
 bool FirebaseDatabaseManager::addMaterial(const QString& material)
 {
-    if (!isConnected()) {
-        setLastError("Not connected to database");
+    if (!isAuthenticated()) {
+        setLastError("Not authenticated");
+        emit authenticationRequired();
         return false;
     }
 
@@ -614,8 +1067,9 @@ bool FirebaseDatabaseManager::addMaterial(const QString& material)
 
 bool FirebaseDatabaseManager::addType(const QString& type)
 {
-    if (!isConnected()) {
-        setLastError("Not connected to database");
+    if (!isAuthenticated()) {
+        setLastError("Not authenticated");
+        emit authenticationRequired();
         return false;
     }
 
@@ -638,8 +1092,9 @@ bool FirebaseDatabaseManager::addType(const QString& type)
 
 bool FirebaseDatabaseManager::removeColor(const QString& color)
 {
-    if (!isConnected()) {
-        setLastError("Not connected to database");
+    if (!isAuthenticated()) {
+        setLastError("Not authenticated");
+        emit authenticationRequired();
         return false;
     }
 
@@ -656,8 +1111,9 @@ bool FirebaseDatabaseManager::removeColor(const QString& color)
 
 bool FirebaseDatabaseManager::removeMaterial(const QString& material)
 {
-    if (!isConnected()) {
-        setLastError("Not connected to database");
+    if (!isAuthenticated()) {
+        setLastError("Not authenticated");
+        emit authenticationRequired();
         return false;
     }
 
@@ -674,8 +1130,9 @@ bool FirebaseDatabaseManager::removeMaterial(const QString& material)
 
 bool FirebaseDatabaseManager::removeType(const QString& type)
 {
-    if (!isConnected()) {
-        setLastError("Not connected to database");
+    if (!isAuthenticated()) {
+        setLastError("Not authenticated");
+        emit authenticationRequired();
         return false;
     }
 

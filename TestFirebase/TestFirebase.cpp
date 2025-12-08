@@ -24,26 +24,88 @@ int main(int argc, char* argv[])
 
     // Personal URL Firebase!
     QString firebaseUrl = "https://homeinventory-b858b-default-rtdb.europe-west1.firebasedatabase.app/";
+    QString apiKey = "AIzaSyAB1LW2A7wSOGMKIzlyHd7MYjKsnuwy88w";
 
     FirebaseDatabaseManager db;
 
-    // Test 1: Connection
-    std::cout << u8"\n📡 TEST 1: Connection\n";
-    qDebug() << "Firebase URL:" << firebaseUrl;
+    // Firebase Configuration
+    std::cout << u8"\n Configuring Firebase\n";
     db.connect(firebaseUrl);
+    db.setApiKey(apiKey);
 
-    if (!db.isConnected()) {
-        std::cout << u8"\n❌ Cannot proceed without connection. Exiting.\n";
+    // Prova auto-login con credenziali salvate
+    std::cout << u8"\n🔐 Attempting auto-login...\n";
+    bool autoLoginSuccess = db.tryAutoLogin();
+
+    // Se auto-login fallisce, chiedi credenziali manualmente
+    if (!autoLoginSuccess) {
+        std::cout << u8"\n📝 Manual login required\n";
+        // USA QTextStream invece di std::cin
+        QTextStream cin(stdin);
+        QString email, password;
+
+        std::cout << u8"Enter your email: ";
+        std::cout.flush();
+        email = cin.readLine().trimmed();
+
+        std::cout << u8"Enter your password: ";
+        std::cout.flush();
+        password = cin.readLine().trimmed();
+
+        std::cout << u8"Remember credentials for next time? (y/n): ";
+        std::cout.flush();
+        QString rememberInput = cin.readLine().trimmed().toLower();
+        bool rememberMe = (rememberInput == "y" || rememberInput == "yes");
+
+        // Autentica con email e password
+        bool loginSuccess = db.authenticateWithEmail(email, password, rememberMe);
+
+        if (loginSuccess) {
+            // TEST: Verifica subito dopo il login
+            std::cout << "\n🧪 Testing immediate request after login...\n";
+            QStringList colors = db.getColors();
+            if (colors.isEmpty()) {
+                std::cout << "❌ Request failed even after fresh login!\n";
+                std::cout << "Error: ";
+                qDebug() << db.lastError();
+            }
+            else {
+                std::cout << "✅ Request succeeded!\n";
+                qDebug() << "Colors:" << colors;
+            }
+        }
+
+        if (!loginSuccess) {
+            std::cout << u8"\n❌ Login failed: ";
+            qDebug() << db.lastError();
+            std::cout << u8"\nCannot proceed without authentication. Exiting.\n";
+            return 1;
+        }
+    }
+
+    if (!db.isAuthenticated()) {
+        std::cout << u8"\n❌ Not authenticated. Exiting.\n";
         return 1;
     }
 
-    // Test 2: Attributes (Colors, Materials, Types)
-    std::cout << u8"\n📚 TEST 2: Attributes\n";
+    //Esegui i test
+
+    // Test Attributes (Colors, Materials, Types)
+    std::cout << u8"📚 Test Attributes\n";
     testAttributes(db);
 
-    // Test 3: Objects (CRUD)
-    std::cout << u8"\n📦 TEST 3: Objects CRUD\n";
+    // Test Objects (CRUD)
+    std::cout << u8"📦 Test Objects CRUD\n";
     testObjects(db);
+
+    // Step 5: Chiedi se fare logout e cancellare le credenziali
+    std::cout << u8"👋 STEP 6: Logout options\n";
+    std::cout << u8"Do you want to clear saved credentials? (y/n): ";
+    std::string clearInput;
+    std::getline(std::cin, clearInput);
+    bool clearCredentials = (clearInput == "y" || clearInput == "Y");
+
+    db.logout(clearCredentials);
 
     qDebug() << "\n=================================";
     std::cout << u8"✅ All tests completed!\n";

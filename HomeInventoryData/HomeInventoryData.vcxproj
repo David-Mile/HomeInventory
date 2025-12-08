@@ -36,7 +36,7 @@
     <Import Project="$(QtMsBuild)\qt_defaults.props" />
   </ImportGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="QtSettings">
-    <QtInstall>6.10.0_msvc2022_64</QtInstall>
+    <QtInstall>6.10.1_msvc2022_64</QtInstall>
     <QtModules>core</QtModules>
     <QtBuildConfig>debug</QtBuildConfig>
   </PropertyGroup>
@@ -69,7 +69,7 @@
       <AdditionalLibraryDirectories>$(QTDIR)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <ClCompile>
-      <AdditionalIncludeDirectories>$(QTDIR)\include;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtCore;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(QTDIR)\include\QtNetworkAuth;$(QTDIR)\include;$(QTDIR)\include\QtNetwork;$(QTDIR)\include\QtCore;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="Configuration">
@@ -103,9 +103,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CredentialsManager.cpp" />
     <ClCompile Include="FirebaseDatabaseManager.cpp" />
     <ClCompile Include="HomeObject.cpp" />
     <QtMoc Include="FirebaseDatabaseManager.h" />
+    <ClInclude Include="CredentialsManager.h" />
     <ClInclude Include="homeinventorydata_global.h" />
     <ClInclude Include="HomeObject.h" />
     <ClInclude Include="IDatabaseManager.h" />
