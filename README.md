@@ -1,6 +1,6 @@
 # HomeInventory 🏠
 
-> A comprehensive Qt-based home inventory management system with cloud synchronization
+> A Qt-based home inventory management system with cloud synchronization
 
 [![Qt](https://img.shields.io/badge/Qt-6.10+-green.svg)](https://www.qt.io/)
 [![C++](https://img.shields.io/badge/C++-17-blue.svg)](https://isocpp.org/)
