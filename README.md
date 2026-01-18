@@ -168,9 +168,7 @@ HomeInventory/
 │   │   │   ├── wsottoambienti.h/cpp
 │   │   │   └── wsovraposizioni.h/cpp
 │   │   │
-│   │   ├── Rooms/                       # Specific rooms widgets
-│   │   │   ├── wopenspace.h/cpp/ui
-│   │   │   ├── wanticamera.h/cpp/ui
+│   │   ├── Furnishings/                       # Specific furnishings widgets
 │   │   │   ├── wbagno.h/cpp/ui
 │   │   │   ├── wcamera.h/cpp/ui
 │   │   │   ├── wcantina.h/cpp/ui
@@ -187,7 +185,7 @@ HomeInventory/
 │   │   │   ├── wleftwall.h/cpp/ui
 │   │   │   └── wfrontwall.h/cpp/ui
 │   │   │
-│   │   ├── Movables/                   # Specific movables widgets
+│   │   ├── Rooms/                   # Specific rooms widgets
 │   │   │   ├── wopenspace.h/cpp/ui
 │   │   │   ├── wanticamera.h/cpp/ui
 │   │   │
